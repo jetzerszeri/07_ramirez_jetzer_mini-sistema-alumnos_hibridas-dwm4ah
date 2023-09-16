@@ -49,6 +49,33 @@ router.post('/', async (req, res) => {
 })
 
 
+//ver info de cada alumno
+router.get('/:legajo', async (req, res) => {
+    try{
+        const {legajo} = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+
+        const alumno = data.findIndex(alumno => alumno.legajo == legajo);
+
+        if(alumno == -1){
+            res.status(404).json({
+                msg: 'El alumno no existe'
+            });
+            return;
+        }
+
+        res.status(200).json({
+            msg: `Información del alumno ${legajo}`, 
+            alumno: data[alumno]
+        });
+
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
+
 //Se debe poder modificar los datos de un alumno
 router.put('/:legajo', async (req, res) => {
     try{
@@ -56,6 +83,13 @@ router.put('/:legajo', async (req, res) => {
         const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
 
         const index = data.findIndex(alumno => alumno.legajo == legajo);
+
+        if(index == -1){
+            res.status(404).json({
+                msg: 'El alumno no existe'
+            });
+            return;
+        }
 
         const info = req.body;
 

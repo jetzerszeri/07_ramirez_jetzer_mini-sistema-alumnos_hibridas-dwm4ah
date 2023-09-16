@@ -1,14 +1,20 @@
 [
   {
     "legajo": "1",
-    "name": "Maria",
-    "lastname": "Lopez",
+    "name": "Alejandro",
+    "lastname": "Narvaez",
     "year": 2023
   },
   {
     "legajo": 2,
     "name": "Marcos",
     "lastname": "Saenz",
+    "year": 2023
+  },
+  {
+    "legajo": 3,
+    "name": "Ricardo",
+    "lastname": "Ze",
     "year": 2023
   }
 ]
