@@ -49,6 +49,40 @@ router.post('/', async (req, res) => {
 })
 
 
+//Se debe poder modificar los datos de un alumno
+router.put('/:legajo', async (req, res) => {
+    try{
+        const {legajo} = req.params;
+        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+
+        const index = data.findIndex(alumno => alumno.legajo == legajo);
+
+        const info = req.body;
+
+        const updatedData = {
+            legajo: legajo,
+            name: info.name,
+            lastname: info.lastname,
+            year: info.year,
+        }
+
+        data[index] = updatedData;
+
+        await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
+
+        res.status(200).json({
+            msg: 'El alumno fue modificado correctamente', 
+            info
+        });
+
+
+    
+    }catch(error){
+        res.json({
+            msg: 'Error en el servidor ' + error, 
+        });
+    }
+})
 
 
 module.exports = router;
