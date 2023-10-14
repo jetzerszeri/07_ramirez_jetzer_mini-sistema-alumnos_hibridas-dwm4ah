@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const fs = require('fs').promises; //para leer archivos
 const router = express.Router();
 
