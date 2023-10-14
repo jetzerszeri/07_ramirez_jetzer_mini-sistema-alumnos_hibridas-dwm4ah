@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/sistema_alumnos', {
 const studentSchema = mongoose.Schema({
     name: String,
     lastname: String,
-    year: Date
+    year: Number,
 })
 
 
@@ -52,12 +52,16 @@ router.get('/', async (req, res) => {
 //Se debe poder agregar un alumno
 router.post('/', async (req, res) => {
     try {
+        const alumnoData = req.body;
+        // guardo la tarea
 
+        const newStudent = new Student(alumnoData);
+        newStudent.save();
 
 
         res.json({
             msg: 'El alumno fue agregado correctamente', 
-            data
+            data: {}
         });
         
     }catch(error){
