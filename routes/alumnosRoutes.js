@@ -5,6 +5,15 @@ const router = express.Router();
 
 const rutaJSON = './data/alumnos.json';
 
+
+//creamos la conexión a la base de datos
+mongoose.connect('mongodb://localhost:27017', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+
+
+
 //En la ruta Lista de Alumnos (/alumnos) se debe mostrar la lista de alumnos registrados en el sistema, Para cada alumno se debe visualizar un link para ver el alumno, la ruta para ver el alumno debe ser 
 router.get('/', async (req, res) => {
     try{
