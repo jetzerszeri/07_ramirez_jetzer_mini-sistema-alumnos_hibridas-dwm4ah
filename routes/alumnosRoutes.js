@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 //creamos la conexión a la base de datos
-mongoose.connect('mongodb://localhost:27017', {
+mongoose.connect('mongodb://localhost:27017/sistema_alumnos', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
