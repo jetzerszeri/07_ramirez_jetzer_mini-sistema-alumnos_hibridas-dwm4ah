@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const fs = require('fs').promises; //para leer archivos
 const router = express.Router();
-
-const rutaJSON = './data/alumnos.json';
 
 
 //creamos la conexión a la base de datos
@@ -55,12 +52,8 @@ router.get('/', async (req, res) => {
 //Se debe poder agregar un alumno
 router.post('/', async (req, res) => {
     try {
-        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
-        const alumno = req.body;
 
-        data.push(alumno);
 
-        await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
 
         res.json({
             msg: 'El alumno fue agregado correctamente', 
