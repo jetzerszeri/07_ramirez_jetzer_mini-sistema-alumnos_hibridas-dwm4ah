@@ -13,6 +13,17 @@ mongoose.connect('mongodb://localhost:27017', {
 })
 
 
+//defino un esquema, 
+//recibe como parametro el json que va a tener la estructura de la base de datos
+const Schema = mongoose.Schema({
+    name: String,
+    lastname: String,
+    year: Date
+})
+
+
+
+
 
 //En la ruta Lista de Alumnos (/alumnos) se debe mostrar la lista de alumnos registrados en el sistema, Para cada alumno se debe visualizar un link para ver el alumno, la ruta para ver el alumno debe ser 
 router.get('/', async (req, res) => {
