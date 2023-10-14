@@ -30,18 +30,24 @@ const Student = mongoose.model('student', studentSchema);
 //En la ruta Lista de Alumnos (/alumnos) se debe mostrar la lista de alumnos registrados en el sistema, Para cada alumno se debe visualizar un link para ver el alumno, la ruta para ver el alumno debe ser 
 router.get('/', async (req, res) => {
     try{
-        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+        const students = await Student.find({});
+        console.log(students);
 
-        let html = `<h1>Lista de Alumnos</h1>
-        <ul>`;
+        res.json({
+            msg: 'Lista de Alumnos', 
+            students
+        })
 
-        data.forEach((alumno, index) => {
-            html += `<li><a href="/alumnos/${alumno.legajo}">${alumno.name} ${alumno.lastname}</a></li>`;
-        });
+        // let html = `<h1>Lista de Alumnos</h1>
+        // <ul>`;
 
-        html += '</ul>';
+        // data.forEach((alumno, index) => {
+        //     html += `<li><a href="/alumnos/${alumno.legajo}">${alumno.name} ${alumno.lastname}</a></li>`;
+        // });
 
-        res.status(200).send(html);
+        // html += '</ul>';
+
+        // res.status(200).send(html);
     }catch(error){
         res.json({
             msg: 'Error en el servidor ' + error, 
