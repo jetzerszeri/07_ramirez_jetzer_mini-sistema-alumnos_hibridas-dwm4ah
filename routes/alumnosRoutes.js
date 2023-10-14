@@ -82,20 +82,15 @@ router.post('/', async (req, res) => {
 router.get('/:legajo', async (req, res) => {
     try{
         const {legajo} = req.params;
-        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+        const filtro = {_id: legajo};
 
-        const alumno = data.findIndex(alumno => alumno.legajo == legajo);
+        const resultado = await Student.find(filtro);
 
-        if(alumno == -1){
-            res.status(404).json({
-                msg: 'El alumno no existe'
-            });
-            return;
-        }
+
 
         res.status(200).json({
-            msg: `Información del alumno ${legajo}`, 
-            alumno: data[alumno]
+            msg: resultado ? 'Alumno encontrado' : 'Alumno no encontrado', 
+            alumno: resultado
         });
 
     }catch(error){
