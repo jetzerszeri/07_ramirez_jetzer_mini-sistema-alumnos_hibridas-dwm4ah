@@ -15,12 +15,17 @@ mongoose.connect('mongodb://localhost:27017', {
 
 //defino un esquema, 
 //recibe como parametro el json que va a tener la estructura de la base de datos
-const Schema = mongoose.Schema({
+const studentSchema = mongoose.Schema({
     name: String,
     lastname: String,
     year: Date
 })
 
+
+//creo el objeto
+const Student = mongoose.model('student', studentSchema);
+
+//esto de arriba se va a hacer por cada colección que tenga la base de datos, ejemplo, usuarios, productos, categorías, etc
 
 
 
