@@ -104,33 +104,19 @@ router.get('/:legajo', async (req, res) => {
 router.put('/:legajo', async (req, res) => {
     try{
         const {legajo} = req.params;
-        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
-
-        const index = data.findIndex(alumno => alumno.legajo == legajo);
-
-        if(index == -1){
-            res.status(404).json({
-                msg: 'El alumno no existe'
-            });
-            return;
-        }
 
         const info = req.body;
 
-        const updatedData = {
-            legajo: legajo,
-            name: info.name,
-            lastname: info.lastname,
-            year: info.year,
-        }
+        // actualizacion con mongo db
+        const filtro = {_id: legajo};
 
-        data[index] = updatedData;
+        const actualizacion = {name: info.name};
+        const resultado = await Student.updateOne(filtro, actualizacion);
 
-        await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
 
         res.status(200).json({
             msg: 'El alumno fue modificado correctamente', 
-            info
+            info: resultado
         });
 
 
