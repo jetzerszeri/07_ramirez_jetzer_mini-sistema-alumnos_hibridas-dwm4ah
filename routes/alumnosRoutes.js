@@ -31,23 +31,23 @@ const Student = mongoose.model('student', studentSchema);
 router.get('/', async (req, res) => {
     try{
         const students = await Student.find({});
-        console.log(students);
+        // console.log(students);
 
-        res.json({
-            msg: 'Lista de Alumnos', 
-            students
-        })
+        // res.json({
+        //     msg: 'Lista de Alumnos', 
+        //     students
+        // })
 
-        // let html = `<h1>Lista de Alumnos</h1>
-        // <ul>`;
+        let html = `<h1>Lista de Alumnos</h1>
+        <ul>`;
 
-        // data.forEach((alumno, index) => {
-        //     html += `<li><a href="/alumnos/${alumno.legajo}">${alumno.name} ${alumno.lastname}</a></li>`;
-        // });
+        students.forEach((alumno, index) => {
+            html += `<li><a href="/alumnos/${alumno._id}">${alumno.name} ${alumno.lastname}</a></li>`;
+        });
 
-        // html += '</ul>';
+        html += '</ul>';
 
-        // res.status(200).send(html);
+        res.status(200).send(html);
     }catch(error){
         res.json({
             msg: 'Error en el servidor ' + error, 
@@ -59,7 +59,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const alumnoData = req.body;
-        // guardo la tarea
 
         const newStudent = new Student(alumnoData);
         newStudent.save();
@@ -67,7 +66,7 @@ router.post('/', async (req, res) => {
 
         res.json({
             msg: 'El alumno fue agregado correctamente', 
-            data: {}
+            data: alumnoData
         });
         
     }catch(error){
