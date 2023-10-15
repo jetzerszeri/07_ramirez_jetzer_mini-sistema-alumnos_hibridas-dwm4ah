@@ -132,25 +132,22 @@ router.put('/:legajo', async (req, res) => {
 router.delete('/:legajo', async (req, res) => {
     try{
         const {legajo} = req.params;
-        const data = JSON.parse(await fs.readFile(rutaJSON, 'utf-8'));
+        const filtro = {_id: legajo};
+        
+        const resultado = await Student.deleteOne(filtro);
 
-        const index = data.findIndex(alumno => alumno.legajo == legajo);
-
-        if(index == -1){
+        if (resultado.deletedCount === 0) {
             res.status(404).json({
-                msg: 'El alumno no existe'
+                msg: 'El alumno no existe',
             });
             return;
-        }else{
-            data.splice(index, 1);
-
-            await fs.writeFile(rutaJSON, JSON.stringify(data, null, 2));
-
-            res.status(200).json({
-                msg: 'El alumno fue eliminado correctamente', 
-                data
-            });
         }
+
+        res.status(200).json({
+            msg: 'El alumno fue eliminado correctamente',
+            resultado,
+        });
+
 
     }catch(error){
         res.json({
